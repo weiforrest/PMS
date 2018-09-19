@@ -22,7 +22,7 @@ class m180919_055212_user extends Migration
             'password' => $this->string()->notNull(),
             'email' => $this->string()->notNull(),
             'authKey' => $this->string(32)->notNull(),
-            'authToken' => $this->string(40)->notNull(),
+            'accessToken' => $this->string(40)->notNull(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
             'logged_at' => $this->integer()
