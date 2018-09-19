@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use app\models\User;
 
 /**
  * Class m180919_055212_user
@@ -19,14 +20,22 @@ class m180919_055212_user extends Migration
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string(32)->notNull(),
-            'password' => $this->string()->notNull(),
-            'email' => $this->string()->notNull(),
-            'authKey' => $this->string(32)->notNull(),
-            'accessToken' => $this->string(40)->notNull(),
+            'password_hash' => $this->string()->notNull(),
+            'email' => $this->string(),
+            'auth_key' => $this->string(32),
+            'access_token' => $this->string(40),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
             'logged_at' => $this->integer()
         ], $tableOptions);
+
+        // add the admin user
+        $admin_user = new User();
+        $admin_user->username = 'admin';
+        $admin_user->setPassword('admin');
+        $admin_user->generateAuthKey();
+        $admin_user->save();
+
 
     }
 
