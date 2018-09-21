@@ -22,6 +22,13 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            // update the logged_at time to user
+            'on afterLogin' => function ($event) {
+                $user = $event->identity;
+                $user->logged_at= time();
+                $user->save();
+
+            },
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
