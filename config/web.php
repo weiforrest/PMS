@@ -29,7 +29,8 @@ $config = [
             //     $user->save();
             // },
             // use the as specify the loginTimestamp behavior
-            'as afterLogin' => app\behaviors\LoginTimestampBehavior::class,
+            'as afterLogin' => 'app\behaviors\LoginTimestampBehavior',
+            // 'loginUrl' => '/site/login',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -55,6 +56,23 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+            ],
+        ],
+    ],
+
+    // add the role AccessControl for logged user
+    'as beforeRequest' => [
+        'class' =>'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'controllers' =>['site'],
+                'actions' => ['login'],
+                'roles' => ['?'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ],
     ],
