@@ -1,47 +1,69 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $this \yii\web\View */
+/* @var $content string */
 
+use app\widgets\Alert;
 use yii\helpers\Html;
+use app\assets\AppAsset;
+use app\assets\LoginAsset;
 use yii\bootstrap\ActiveForm;
 
+AppAsset::register($this);
+LoginAsset::register($this);
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php $this->registerCsrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
 
-    <p>Please fill out the following fields to login:</p>
+    <div class="wrap">
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+        <div class="container">
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?php $form = ActiveForm::begin([
+                    'options' => ['class' => 'form-signin'],
+                    'fieldConfig' => [
+                        'template' => "{label}{input}{error}",
+                        'labelOptions' => ['class' => 'sr-only'],
+                    ],
+                ]); ?>
+                    <h2 class='form-signin-heading'>Please sign in</h2>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'class' => 'form-control']) ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+                    <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control']) ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+                    <?= $form->field($model, 'rememberMe')->checkbox([
+                    ]) ?>
+
+                    <?= Html::submitButton('Login', ['class' => 'btn  btn-lg btn-block btn-primary', 'name' => 'login-button']) ?>
+
+                <?php ActiveForm::end(); ?>
+
         </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
     </div>
-</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+
+        <p class="pull-right"><?= Yii::powered() ?></p>
+    </div>
+</footer>
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
+
