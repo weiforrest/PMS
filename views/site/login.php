@@ -5,11 +5,9 @@
 
 use app\widgets\Alert;
 use yii\helpers\Html;
-use app\assets\AppAsset;
 use app\assets\LoginAsset;
 use yii\bootstrap\ActiveForm;
 
-AppAsset::register($this);
 LoginAsset::register($this);
 $this->title = 'Login';
 ?>
